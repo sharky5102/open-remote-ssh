@@ -1,8 +1,7 @@
 import * as vscode from 'vscode';
 import Log from './common/logger';
 import { RemoteSSHResolver, REMOTE_SSH_AUTHORITY } from './authResolver';
-import { openSSHConfigFile, promptOpenRemoteSSHWindow } from './commands';
-import { HostTreeDataProvider } from './hostTreeView';
+import { promptOpenRemoteSSHWindow } from './commands';
 import { getRemoteWorkspaceLocationData, RemoteLocationHistory } from './remoteLocationHistory';
 
 export async function activate(context: vscode.ExtensionContext) {
@@ -19,13 +18,8 @@ export async function activate(context: vscode.ExtensionContext) {
         await locationHistory.addLocation(locationData[0], locationData[1]);
     }
 
-    const hostTreeDataProvider = new HostTreeDataProvider(locationHistory);
-    context.subscriptions.push(vscode.window.createTreeView('sshHosts', { treeDataProvider: hostTreeDataProvider }));
-    context.subscriptions.push(hostTreeDataProvider);
-
     context.subscriptions.push(vscode.commands.registerCommand('openremotessh.openEmptyWindow', () => promptOpenRemoteSSHWindow(false)));
     context.subscriptions.push(vscode.commands.registerCommand('openremotessh.openEmptyWindowInCurrentWindow', () => promptOpenRemoteSSHWindow(true)));
-    context.subscriptions.push(vscode.commands.registerCommand('openremotessh.openConfigFile', () => openSSHConfigFile()));
     context.subscriptions.push(vscode.commands.registerCommand('openremotessh.showLog', () => logger.show()));
 }
 

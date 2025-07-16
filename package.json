@@ -347,13 +347,11 @@
 	},
 	"devDependencies": {
 		"@types/node": "^16.11.0",
-		"@types/ssh2": "^0.5.52",
-		"@types/ssh2-streams": "0.1.12",
 		"@types/webpack": "^5.28.0",
 		"@typescript-eslint/eslint-plugin": "^5.19.0",
 		"@typescript-eslint/parser": "^5.19.0",
-		"eslint": "^8.13.0",
-		"eslint-plugin-jsdoc": "^19.1.0",
+		"eslint": "^8.57.1",
+		"eslint-plugin-jsdoc": "^19.2.0",
 		"ts-loader": "^9.2.7",
 		"typescript": "^4.6.3",
 		"webpack": "^5.42.0",
@@ -361,9 +359,6 @@
 	},
 	"dependencies": {
 		"glob": "^9.3.1",
-		"simple-socks": "git+https://github.com/jeanp413/simple-socks#main",
-		"socks": "^2.5.0",
-		"@jeanp413/ssh-config": "^4.3.1",
-		"ssh2": "git+https://github.com/jeanp413/ssh2#master"
+		"yarn": "^1.22.22"
 	}
 }
