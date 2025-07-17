@@ -128,7 +128,7 @@ export async function installCodeServer(conn: SSHConnection, serverDownloadUrlTe
             throw new ServerInstallError(`Not supported shell: ${shell}`);
         }
 
-        commandOutput = await conn.execPartial(command, (stdout: string) => endRegex.test(stdout));
+        commandOutput = await conn.execAndWaitUntil(command, (stdout: string) => endRegex.test(stdout));
     } else {
         const installServerScript = generateBashInstallScript(installOptions);
 

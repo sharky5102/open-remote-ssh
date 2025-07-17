@@ -1,6 +1,7 @@
 import * as vscode from 'vscode';
 import { REMOTE_SSH_AUTHORITY } from './authResolver';
 import SSHDestination from './ssh/sshDestination';
+import Log from './common/logger';
 
 export class RemoteLocationHistory {
     private static STORAGE_KEY = 'remoteLocationHistory_v0';
@@ -12,8 +13,8 @@ export class RemoteLocationHistory {
         this.remoteLocationHistory = context.globalState.get(RemoteLocationHistory.STORAGE_KEY) || {};
     }
 
-    getHistory(host: string): string[] {
-        return this.remoteLocationHistory[host] || [];
+    getHistory(): Record<string, string[]> {
+        return this.remoteLocationHistory;
     }
 
     async addLocation(host: string, path: string) {
@@ -35,8 +36,9 @@ export class RemoteLocationHistory {
     }
 }
 
-export function getRemoteWorkspaceLocationData(): [string, string] | undefined {
+export function getRemoteWorkspaceLocationData(logger: Log): [string, string] | undefined {
     let location = vscode.workspace.workspaceFile;
+    logger.info(`Starting with remote workspace ${location}`);
     if (location && location.scheme === 'vscode-remote' && location.authority.startsWith(REMOTE_SSH_AUTHORITY) && location.path.endsWith('.code-workspace')) {
         const [, host] = location.authority.split('+');
         const sshDest = SSHDestination.parseEncoded(host);
@@ -44,6 +46,7 @@ export function getRemoteWorkspaceLocationData(): [string, string] | undefined {
     }
 
     location = vscode.workspace.workspaceFolders?.[0].uri;
+    logger.info(`Starting with remote workspace folder ${location}`);
     if (location && location.scheme === 'vscode-remote' && location.authority.startsWith(REMOTE_SSH_AUTHORITY)) {
         const [, host] = location.authority.split('+');
         const sshDest = SSHDestination.parseEncoded(host);

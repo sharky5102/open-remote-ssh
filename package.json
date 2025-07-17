@@ -6,10 +6,10 @@
 	"publisher": "jeanp413",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/jeanp413/open-remote-ssh.git"
+		"url": "https://github.com/sharky5102/open-remote-ssh.git"
 	},
 	"bugs": {
-		"url": "https://github.com/jeanp413/open-remote-ssh/issues"
+		"url": "https://github.com/sharky5102/open-remote-ssh/issues"
 	},
 	"icon": "resources/icon.png",
 	"engines": {
@@ -25,7 +25,8 @@
 	"keywords": [
 		"remote development",
 		"remote",
-		"ssh"
+		"ssh",
+		"openssh"
 	],
 	"api": "none",
 	"activationEvents": [
@@ -39,14 +40,8 @@
 	"main": "./out/extension.js",
 	"contributes": {
 		"configuration": {
-			"title": "Remote - SSH",
+			"title": "Remote - OpenSSH",
 			"properties": {
-				"remote.SSH.configFile": {
-					"type": "string",
-					"description": "The absolute file path to a custom SSH config file.",
-					"default": "",
-					"scope": "application"
-				},
 				"remote.SSH.connectTimeout": {
 					"type": "number",
 					"description": "Specifies the timeout in seconds used for the SSH command that connects to the remote.",
@@ -61,18 +56,6 @@
 					},
 					"description": "List of extensions that should be installed automatically on all SSH hosts.",
 					"scope": "application"
-				},
-				"remote.SSH.enableDynamicForwarding": {
-					"type": "boolean",
-					"description": "Whether to use SSH dynamic forwarding to allow setting up new port tunnels over an existing SSH connection.",
-					"scope": "application",
-					"default": true
-				},
-				"remote.SSH.enableAgentForwarding": {
-					"type": "boolean",
-					"markdownDescription": "Enable fixing the remote environment so that the SSH config option `ForwardAgent` will take effect as expected from VS Code's remote extension host.",
-					"scope": "application",
-					"default": true
 				},
 				"remote.SSH.serverDownloadUrlTemplate": {
 					"type": "string",
@@ -128,11 +111,6 @@
 				"category": "Remote-SSH"
 			},
 			{
-				"command": "openremotessh.openConfigFile",
-				"title": "Open SSH Configuration File...",
-				"category": "Remote-SSH"
-			},
-			{
 				"command": "openremotessh.showLog",
 				"title": "Show Log",
 				"category": "Remote-SSH"
@@ -164,16 +142,6 @@
 				"command": "openremotessh.explorer.refresh",
 				"title": "Refresh",
 				"icon": "$(refresh)"
-			},
-			{
-				"command": "openremotessh.explorer.configure",
-				"title": "Configure",
-				"icon": "$(gear)"
-			},
-			{
-				"command": "openremotessh.explorer.add",
-				"title": "Add New",
-				"icon": "$(plus)"
 			}
 		],
 		"resourceLabelFormatters": [
@@ -201,11 +169,6 @@
 					"group": "remote_20_ssh_1general@2"
 				},
 				{
-					"command": "openremotessh.openConfigFile",
-					"when": "remoteName =~ /^ssh-remote$/ && remoteConnectionState == connected",
-					"group": "remote_20_ssh_1general@3"
-				},
-				{
 					"command": "openremotessh.showLog",
 					"when": "remoteName =~ /^ssh-remote$/ && remoteConnectionState == connected",
 					"group": "remote_20_ssh_1general@4"
@@ -221,11 +184,6 @@
 					"group": "remote_20_ssh_3local@2"
 				},
 				{
-					"command": "openremotessh.openConfigFile",
-					"when": "remoteConnectionState == disconnected",
-					"group": "remote_20_ssh_3local@3"
-				},
-				{
 					"command": "openremotessh.openEmptyWindow",
 					"when": "!remoteName && !virtualWorkspace",
 					"group": "remote_20_ssh_3local@5"
@@ -234,26 +192,9 @@
 					"command": "openremotessh.openEmptyWindowInCurrentWindow",
 					"when": "!remoteName && !virtualWorkspace",
 					"group": "remote_20_ssh_3local@6"
-				},
-				{
-					"command": "openremotessh.openConfigFile",
-					"when": "!remoteName && !virtualWorkspace",
-					"group": "remote_20_ssh_3local@7"
 				}
 			],
 			"commandPalette": [
-				{
-					"command": "openremotessh.explorer.refresh",
-					"when": "false"
-				},
-				{
-					"command": "openremotessh.explorer.configure",
-					"when": "false"
-				},
-				{
-					"command": "openremotessh.explorer.add",
-					"when": "false"
-				},
 				{
 					"command": "openremotessh.explorer.emptyWindowInNewWindow",
 					"when": "false"
@@ -276,16 +217,6 @@
 				}
 			],
 			"view/title": [
-				{
-					"command": "openremotessh.explorer.add",
-					"when": "view == sshHosts",
-					"group": "navigation"
-				},
-				{
-					"command": "openremotessh.explorer.configure",
-					"when": "view == sshHosts",
-					"group": "navigation"
-				},
 				{
 					"command": "openremotessh.explorer.refresh",
 					"when": "view == sshHosts",

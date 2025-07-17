@@ -65,7 +65,7 @@ export class RemoteSSHResolver implements vscode.RemoteAuthorityResolver, vscode
                     port: sshDest.port,
                     username: sshDest.user || process.env["USER"] || "",
                     connectTimeout
-                });
+                }, this.logger);
 
                 // Detect platform
                 let platform = remotePlatformMap[sshDest.hostname];
